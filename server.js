@@ -10,12 +10,19 @@ const server=http.createServer((req,res)=>{
      switch(req.url){
         case '/':
             path+='index.html';
+            res.statusCode=200;
             break;
         case '/about':
             path+='about.html';
+            res.statusCode=200
+            break;
+        case '/about-me':
+            res.statusCode=301;
+            res.setHeader("Location","/about");
             break;
         default:
             path+='404.html';
+            res.statusCode=404;
             break;
      }
 
