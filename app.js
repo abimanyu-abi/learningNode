@@ -4,6 +4,9 @@ const express =require("express");
 
 const app =express();
 
+//register view engine
+app.set('view engine','ejs');
+
 
 //listen for requests
 app.listen(3000);
@@ -11,16 +14,20 @@ app.listen(3000);
 
 app.get("/about",(req,res)=>{
     //res.send("<h1>this is an about page</h1>");
-    res.sendFile("./views/about.html",{root:__dirname});
+    res.render('about');
 
 })
 app.get("/blog",(req,res)=>{
    // res.send("<h1>hi this is an blog page</h1>");
-   res.sendFile("./views/blog.html",{root:__dirname});
+   res.render('blog');
 })
 app.get("/",(req,res)=>{
     //res.send("<h1>hi there this is express app</h1>");
-    res.sendFile("./views/index.html",{root:__dirname});
+    const blogs = [
+        {title:"food",snippet:"this is about the blog food"},
+        {title:"health",snippet:"this is about the blog health"}
+    ]
+    res.render('index',{title:"home",blogs});
 })
 
 //redirects
@@ -32,5 +39,5 @@ app.get('/about-us',(req,res)=>{
 //404 page
 
 app.use((req,res)=>{
-    res.status(404).sendFile("./views/404.html",{root:__dirname});
+    res.status(404).render('404');
 })
